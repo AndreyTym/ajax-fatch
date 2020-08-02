@@ -5,8 +5,7 @@ function getAjaxHTML() {
   const xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
-      document.querySelector('.html-container')
-        .innerHTML = xhr.responceText;
+      document.querySelector('.html-container').innerHTML = xhr.responceText;
     }
   }
   xhr.open('get', 'client-data.html', true);
@@ -25,4 +24,28 @@ async function fetchHtml() {
     const response = await fetch('client-data.html');
     const html = await response.text();
     document.querySelector('.html-container').innerHTML = html
+}
+
+
+document.querySelector('.get-ajax-json').addEventListener('click', getAjaxJson);
+
+function getAjaxJson() {
+  const xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
+      document.querySelector('.name').innerText = data.name;
+      document.querySelector('.balance').innerText = data.balance;
+    }
+  }
+  xhr.open('get', 'client-data.json', true);
+  xhr.send();
+}
+
+document.querySelector(".fetch-json").addEventListener("click", fetchjson);
+async function fetchjson() {
+    const response = await fetch('client-data.json');
+    const data = await response.json();
+    document.querySelector('.name').innerText = data.name;
+    document.querySelector('.balance').innerText = data.balance;
 }
